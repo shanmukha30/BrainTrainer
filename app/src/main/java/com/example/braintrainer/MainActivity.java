@@ -1,12 +1,14 @@
 package com.example.braintrainer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import android.widget.GridLayout;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView score;
     TextView answer;
     TextView time;
+    GridLayout gridLayout;
     public void chooseAnswer(View view){
         if (view.getTag().toString().equals(Integer.toString(locationOfCorrectAnswer))){
             points++;
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void playAgain(View view){
         int points = 0, q = 0;
+        answer.setVisibility(View.VISIBLE);
         score.setText(points+"/"+q);
         answer.setText("Start");
         button1.setEnabled(true);
@@ -84,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
         button3.setEnabled(true);
         button4.setEnabled(true);
         time.setText("30s");
+        gridLayout.setVisibility(View.VISIBLE);
         playAgain.setVisibility(View.INVISIBLE);
+
+
         new CountDownTimer(30100, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -95,15 +102,14 @@ public class MainActivity extends AppCompatActivity {
             public void onFinish() {
                 time.setText("0s");
                 answer.setText("Time's up");
-                button1.setVisibility(View.INVISIBLE);
-                button2.setVisibility(View.INVISIBLE);
-                button3.setVisibility(View.INVISIBLE);
-                button4.setVisibility(View.INVISIBLE);
+                gridLayout.setVisibility(View.INVISIBLE);
                 playAgain.setVisibility(View.VISIBLE);
-                answer.setText("Your score: "+Integer.toString(points)+"/"+Integer.toString(q));
+
+
             }
         }.start();
         generate();
+
         playAgain.setVisibility(View.INVISIBLE);
     }
     @Override
@@ -122,5 +128,6 @@ public class MainActivity extends AppCompatActivity {
         score = findViewById(R.id.scoreTextView);
         time = findViewById(R.id.timerTextView);
         answer = findViewById(R.id.resultTextView);
+        gridLayout = findViewById(R.id.gridLayout);
     }
 }
